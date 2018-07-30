@@ -16,7 +16,9 @@ const {
     search_user,
     get_group_name,
     mark_student_notpaid,
-    mark_student_paid
+    mark_student_paid,
+    attendance_false,
+    attendance_true
 } = require('../controllers/group.controller')
 
 router.post('/homework', verifyJWT_MW, homework)
@@ -33,7 +35,8 @@ router.get('/get_group_name/:group_id', verifyJWT_MW, get_group_name)
 router.get('/get_homework/:group_id', verifyJWT_MW, get_homework)
 router.post('/mark_student_paid', mark_student_paid)
 router.post('/mark_student_notpaid', mark_student_notpaid)
-
+router.post('/attendance_true', attendance_true)
+router.post('/attendance_false', attendance_false)
 // router.post('/get' ,verifyJWT_MW,get_user_groups)
 // router.post('/getall' ,verifyJWT_MW,get_user_groups)
 

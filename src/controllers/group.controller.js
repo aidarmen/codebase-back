@@ -326,15 +326,16 @@ function mark_student_paid(req, res) {
 
 USER_GROUP.update(
         {'group_id': mongoose.Types.ObjectId(req.body.group_id),
-        'user_id': mongoose.Types.ObjectId(req.body.user_id)},
+        '_id': mongoose.Types.ObjectId(req.body.student_id)},
         { $set:
            
             { 'payment_status': true}
            
         },(err,item)=>{
             console.log(item)
+            res.status(200).send(item).end()
         }
-    )
+    ); 
 
 }
 
@@ -342,17 +343,74 @@ function mark_student_notpaid(req, res) {
 
     USER_GROUP.update(
             {'group_id': mongoose.Types.ObjectId(req.body.group_id),
-            'user_id': mongoose.Types.ObjectId(req.body.user_id)},
+            '_id': mongoose.Types.ObjectId(req.body.student_id)},
             { $set:
                
                 { 'payment_status': false}
                
             },(err,item)=>{
-                console.log(item)
+                if (err) console.log(err) 
+                else {
+                console.log(item)}
+                res.status(200).send(item).end()
             }
-        )
-    
+        );  
+ }
+
+
+
+ async function attendance_true(req, res) {
+    try{
+        // let user_group = await USER_GROUP.find({group_id: mongoose.Types.ObjectId(req.body.group_id), user_id: mongoose.Types.ObjectId(req.body.user_id)});
+
+      
+
+        USER_GROUP_TIME.update(
+            {'group_user_id': mongoose.Types.ObjectId(req.body.group_user_id),
+            'time_id': mongoose.Types.ObjectId(req.body.time_id)},
+                { $set:
+                       
+                        { 'status': true}
+                       
+                    },(err,item)=>{
+                        if (err) console.log(err) 
+                        else {
+                        console.log(item)}
+                        res.status(200).send(item).end()
+                    }
+            ); 
+
+    }catch(e){
+        console.log(e)
     }
+}
+
+
+async function attendance_false(req, res) {
+    try{
+        // let user_group = await USER_GROUP.find({group_id: mongoose.Types.ObjectId(req.body.group_id), user_id: mongoose.Types.ObjectId(req.body.user_id)});
+
+      
+
+        USER_GROUP_TIME.update(
+            {'group_user_id': mongoose.Types.ObjectId(req.body.group_user_id),
+            'time_id': mongoose.Types.ObjectId(req.body.time_id)},
+                { $set:
+                       
+                        { 'status': false}
+                       
+                    },(err,item)=>{
+                        if (err) console.log(err) 
+                        else {
+                        console.log(item)}
+                        res.status(200).send(item).end()
+                    }
+            ); 
+
+    }catch(e){
+        console.log(e)
+    }
+}
 
 
 
@@ -441,6 +499,8 @@ module.exports = {
     get_all_users,
     search_user,
     mark_student_paid,
-    mark_student_notpaid
+    mark_student_notpaid,
+    attendance_false,
+    attendance_true
 
 }

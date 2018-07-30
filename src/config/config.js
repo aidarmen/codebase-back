@@ -6,7 +6,7 @@ module.exports = {
     database: {
         host            : 'localhost',
         port            : 27017,
-        url             : 'mongodb://127.0.0.1:27017/codebase'
+        url             : 'mongodb://127.0.0.1:27017/codebase2'
     },
     auth: {
         JWT_SECRET      : '1982LvDSm44Xv2jYwOh93Y37LvDSm4XvjYOhq9Yq',
