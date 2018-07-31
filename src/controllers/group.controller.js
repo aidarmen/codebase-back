@@ -129,6 +129,7 @@ function get_course_groups(req, res) {
 }
 
 function get_group_name(req, res) {
+   
     GROUPS.aggregate([
         { $match: { '_id': mongoose.Types.ObjectId(req.params.group_id) } },
     ]).exec((err, result) => {
@@ -414,6 +415,26 @@ async function attendance_false(req, res) {
 
 
 
+function paid (req, res){
+console.log(req.user._id, "here34")
+    try{
+        USER_GROUP.find(
+            { group_id: mongoose.Types.ObjectId(req.params.group_id), 
+            user_id: mongoose.Types.ObjectId(req.user._id)},
+            (err, item) =>{
+                if (err) console.log(err) 
+                else {
+                console.log(item)}
+                res.status(200).send(item).end()
+            }
+        )
+
+    }
+    catch(e) {
+        console.log(e)
+    }
+}
+
 
 
 function get_all_users(req, res) {
@@ -431,7 +452,7 @@ function get_all_users(req, res) {
                     $project: {
                         _id: 1,
                         name: 1,
-                        name: 1,
+                        surname: 1,
                         "in_group": {
                             $in: ["$_id", array_els]
                         }
@@ -501,6 +522,7 @@ module.exports = {
     mark_student_paid,
     mark_student_notpaid,
     attendance_false,
-    attendance_true
+    attendance_true,
+    paid
 
 }
